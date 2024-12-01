@@ -1,0 +1,13 @@
+{
+    "type": "recipe",
+    "crafter": "mechanic_crafting",
+    "inputs": [
+      {
+        "item": "minecraft:quartz",
+        "count": 4
+      }
+    ],
+    "result": "minecraft:quartz_block",
+    "intermediate": "minecraft:air",
+    "count": 1
+  }

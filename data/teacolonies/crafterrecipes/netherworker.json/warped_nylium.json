@@ -1,0 +1,14 @@
+{
+    "type": "recipe",
+    "crafter": "netherworker_custom",
+    "inputs": [
+      {
+        "item": "minecraft:dirt"
+      },
+      {
+        "item": "minecraft:warped_fungus"
+      }
+    ],
+    "intermediate": "minecraft:air",
+    "result": "minecraft:warped_nylium"
+  }

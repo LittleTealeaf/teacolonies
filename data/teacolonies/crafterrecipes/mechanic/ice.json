@@ -1,0 +1,14 @@
+{
+    "type": "recipe",
+    "crafter": "mechanic_crafting",
+    "inputs": [
+      {
+        "item": "minecraft:water_bucket",
+        "count": 1
+      }
+    ],
+    "result": "minecraft:ice",
+    "intermediate": "minecraft:air",
+    "count": 1,
+    "loot-table": "minecolonies:recipes/bucket"
+  }

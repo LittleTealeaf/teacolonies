@@ -1,0 +1,18 @@
+{
+    "type": "recipe",
+    "crafter": "mechanic_crafting",
+    "inputs": [
+      {
+        "item": "minecraft:lava_bucket",
+        "count": 1
+      },
+      {
+        "item": "minecraft:wheat_seeds",
+        "count": 8
+      }
+    ],
+    "result": "minecraft:blaze_powder",
+    "intermediate": "minecraft:air",
+    "count": 6,
+    "loot-table": "minecolonies:recipes/bucket"
+  }

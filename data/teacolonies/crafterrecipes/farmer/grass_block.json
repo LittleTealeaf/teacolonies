@@ -1,0 +1,17 @@
+{
+    "type": "recipe",
+    "crafter": "farmer_crafting",
+    "inputs": [
+      {
+        "item": "minecraft:dirt",
+        "count": 1
+      },
+      {
+        "item": "minecraft:wheat_seeds",
+        "count": 8
+      }
+    ],
+    "result": "minecraft:grass_block",
+    "intermediate": "minecraft:air",
+    "count": 1
+  }
