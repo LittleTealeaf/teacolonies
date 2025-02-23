@@ -4,6 +4,7 @@ import os
 import shutil
 import json
 import hashlib
+import zipfile
 
 
 
@@ -199,10 +200,12 @@ class Hut:
 
 
 class DataPack:
-    def __init__(self):
+    def __init__(self, description = ""):
         self.recipes = {}
         self.loottables = {}
         self.id_count = 0
+        self.format = 18
+        self.description = description
 
         self.sawmill = Hut(self, "sawmill", crafting = True)
         self.mechanic = Hut(self, "mechanic", crafting = True)
@@ -292,11 +295,16 @@ class DataPack:
         return ids
 
     def save(self):
-        shutil.rmtree("data", ignore_errors=True)
-        os.makedirs("data/teacolonies/crafterrecipes")
-        count = 0
-        for id, recipe in self.recipes.items():
-            with open(f"data/teacolonies/crafterrecipes/{id}.json", "w") as f:
-                f.write(json.dumps(recipe, indent=4))
-            count += 1
-        print(f"Saved {count} recipes")
+        with zipfile.ZipFile("teacolonies.zip", "w") as zipf:
+            zipf.writestr("pack.mcmeta", json.dumps({
+                "pack": {
+                    "pack_format": self.format,
+                    "description": self.description
+                }
+            }, indent = 4))
+            count = 0
+
+            for id, recipe in self.recipes.items():
+                zipf.writestr(f"data/teacolonies/crafterrecipes/{id}.json", json.dumps(recipe, indent = 4))
+                count += 1
+            print(f"Saved {count} recipes")

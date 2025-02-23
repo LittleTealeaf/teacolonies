@@ -13,7 +13,7 @@ def do(text):
     return f"domum_ornamentum:{text}"
 
 
-dp = DataPack()
+dp = DataPack("Teacolonies")
 
 # CONFIGURATION:
 POTION_STRONG_MIN_LEVEL = 2

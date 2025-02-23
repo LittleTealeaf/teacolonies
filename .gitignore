@@ -1,1 +1,3 @@
 install.py
+*.zip
+__pycache__
