@@ -161,6 +161,8 @@ for tree in TREES:
         [Item(planks, 6), Item(m(f"{tree}_door"))], Item(mc("blockhutbuilder"))
     )
     dp.mechanic.craft(Item(planks, 2), Item(m(f"{tree}_pressure_plate")))
+    dp.sawmill.craft([Item(planks, 6), Item(m("book"), 3)], Item(m("bookshelf")))
+    dp.sawmill.craft([Item(planks, 4), Item(m("paper"), 2)], Item(m("cartography_table")))
 
 
 # Dead Bush
@@ -368,7 +370,7 @@ dp.netherworker.custom(
 
 dp.netherworker.custom(
     [Item(m("lava_bucket")), Item(m("netherrack"), 4)],
-    Item(m("blaze_rod")),
+    Item(m("blaze_rod"), 16),
     additional_output=Item(m("bucket")),
 )
 
