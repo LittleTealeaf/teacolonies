@@ -268,7 +268,7 @@ dp.mechanic.craft(
 
 dp.mechanic.craft(
     [Item(m("water_bucket"), 1), Item(m("lava_bucket"), 1)],
-    Item(m("cobblestone"), 16),
+    Item(m("cobblestone"), 64),
     tool=mc("pickaxe"),
     additional_output=Item(m("bucket"), 2),
 )
@@ -296,13 +296,6 @@ for ore in ["gold", "iron", "copper"]:
         [Item(f"minecraft:{ore}_ingot", 6)],
         Item(f"minecraft:raw_{ore}_block"),
     )
-
-# Cobblestone
-dp.mechanic.craft(
-    [Item("minecraft:water_bucket"), Item("minecraft:lava_bucket")],
-    Item("minecraft:cobblestone", 6),
-    additional_output=Item("minecraft:bucket", 2),
-)
 
 
 ## Builder to make ores
@@ -605,6 +598,11 @@ stonework("quartz_block", prefix="quartz")
 for p in ["polished_", ""]:
     for stone in ["granite", "andesite", "diorite", "blackstone"]:
         stonework(f"{p}{stone}", wall=p == "" or stone == "blackstone")
+
+dp.stonemason.craft(
+    [Item(m("quartz"), 2), Item(m("smooth_basalt"), 2)],
+    Item(m("calcite"), 4),
+)
 
 
 # Alchemist
