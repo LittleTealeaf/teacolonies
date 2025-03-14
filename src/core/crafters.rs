@@ -45,7 +45,7 @@ crafter!(Dyer, "dyer", Crafting);
 crafter!(Sifter, "sifter", Custom);
 crafter!(Stonemason, "stonemason", Crafting);
 crafter!(Crusher, "cursher", Custom);
-crafter!(Enchanter, "encahnter", Custom);
+crafter!(Enchanter, "enchanter", Custom);
 crafter!(Concrete, "concretemixer", Custom);
 crafter!(Alchemist, "alchemist", Crafting);
 crafter!(Chef, "chef", Crafting);
