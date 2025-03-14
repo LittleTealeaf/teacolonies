@@ -1,6 +1,2 @@
-pub mod pack;
-pub mod item;
-pub mod recipe;
-pub mod serde_util;
 pub mod datapack;
-pub mod crafters;
+pub mod core;

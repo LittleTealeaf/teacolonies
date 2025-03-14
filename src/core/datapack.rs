@@ -10,7 +10,7 @@ use serde::Serialize;
 use uuid::Uuid;
 use zip::{write::FileOptions, ZipWriter};
 
-use crate::recipe::Recipe;
+use super::recipe::Recipe;
 
 fn generate_uuid_from_hashable<T: Hash>(object: &T) -> Uuid {
     let mut hasher = DefaultHasher::new();

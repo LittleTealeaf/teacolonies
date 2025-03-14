@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::serde_util::exclude_if_one;
+use crate::core::serde_util::exclude_if_one;
 
 #[derive(Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
 pub struct Item {
@@ -11,7 +11,10 @@ pub struct Item {
 }
 
 impl Item {
-    pub fn new(name: impl Into<String>, count: usize) -> Self {
+    pub fn new<I>(name: I, count: usize) -> Self
+    where
+        String: From<I>,
+    {
         Self {
             name: name.into(),
             count,
@@ -33,7 +36,7 @@ macro_rules! item {
         item!($name, 1)
     };
     ($name:expr, $count:expr) => {
-        teacolonies::item::Item::new($name, $count)
+        $crate::core::item::Item::new($name, $count)
     };
 }
 
@@ -62,8 +65,8 @@ macro_rules! mc {
 #[macro_export]
 macro_rules! nbt {
     ($name: expr, $($field: literal = $value: expr),+) => {
-        format!("{}{}", $name, nbt_rust::NbtTag::from(vec![
-                $((String::from($field), nbt_rust::NbtTag::from($value))),+
+        format!("{}{}", String::from($name), nbt_rust::NbtTag::from(vec![
+                $((String::from($field), nbt_rust::NbtTag::from(String::from($value)))),+
         ]))
     };
 }
