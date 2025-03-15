@@ -51,7 +51,7 @@ fn add_recipes(dp: &mut DataPack, color: &str) {
             [("wool", 4), ("bed", 1), ("carpet", 1)].map(|(block, count)| {
                 Recipe::new(
                     Dyer::Crafting,
-                    [item!(m!(dye)), item!(m!(block), count)],
+                    [item!(m!(dye)), item!(m!(format!("white_{block}")), count)],
                     item!(m!(format!("{color}_{block}")), count),
                 )
             }),
