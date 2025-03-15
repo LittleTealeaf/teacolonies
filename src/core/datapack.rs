@@ -36,9 +36,9 @@ impl DataPack {
     }
 
     pub fn add_recipes(&mut self, recipes: impl IntoIterator<Item = Recipe>) {
-        for recipe in recipes.into_iter() {
+        recipes.into_iter().for_each(|recipe| {
             self.add_recipe(recipe);
-        }
+        });
     }
 
     pub fn add_recipe(&mut self, recipe: Recipe) -> String {
