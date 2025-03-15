@@ -72,6 +72,9 @@ fn add_recipes(dp: &mut DataPack, color: &str) {
         item!(dom!(format!("{color}_brick_extra")), 4),
     ));
 
+
+    // Fletcher Based Recipes
+
     dp.add_recipe(Recipe::new(
         Fletcher::Crafting,
         [item!(m!(format!("{color}_wool")))],
