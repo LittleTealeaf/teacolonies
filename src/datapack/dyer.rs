@@ -72,7 +72,6 @@ fn add_recipes(dp: &mut DataPack, color: &str) {
         item!(dom!(format!("{color}_brick_extra")), 4),
     ));
 
-
     // Fletcher Based Recipes
 
     dp.add_recipe(Recipe::new(
@@ -95,120 +94,114 @@ fn add_recipes(dp: &mut DataPack, color: &str) {
 }
 
 fn add_dye_recipes(pack: &mut DataPack) {
-    // Struct to hold dye recipe data for easier iteration
-    struct DyeRecipe(Vec<Item>, Item);
-
-    // Define dye recipes using the struct
-    let dye_recipes = vec![
-        DyeRecipe(vec![item!(m!("bone_meal"))], item!(m!("white_dye"))),
-        DyeRecipe(
-            vec![item!(m!("lily_of_the_valley"))],
-            item!(m!("white_dye")),
-        ),
-        DyeRecipe(vec![item!(m!("oxeye_daisy"))], item!(m!("light_gray_dye"))),
-        DyeRecipe(vec![item!(m!("azure_bluet"))], item!(m!("light_gray_dye"))),
-        DyeRecipe(vec![item!(m!("white_tulip"))], item!(m!("light_gray_dye"))),
-        DyeRecipe(
-            vec![item!(m!("black_dye")), item!(m!("white_dye"), 2)],
-            item!(m!("light_gray_dye"), 3),
-        ),
-        DyeRecipe(
-            vec![item!(m!("gray_dye")), item!(m!("white_dye"))],
-            item!(m!("light_gray_dye"), 2),
-        ),
-        DyeRecipe(vec![item!(m!("blue_orchid"))], item!(m!("light_blue_dye"))),
-        DyeRecipe(
-            vec![item!(m!("blue_dye")), item!(m!("white_dye"))],
-            item!(m!("light_blue_dye")),
-        ),
-        DyeRecipe(
-            vec![item!(m!("white_dye")), item!(m!("black_dye"))],
-            item!(m!("gray_dye"), 2),
-        ),
-        DyeRecipe(vec![item!(m!("ink_sac"))], item!(m!("black_dye"))),
-        DyeRecipe(vec![item!(m!("wither_rose"))], item!(m!("black_dye"))),
-        DyeRecipe(vec![item!(m!("cocoa_beans"))], item!(m!("brown_dye"))),
-        DyeRecipe(
-            vec![item!(m!("fire_coral_block"))],
-            item!(m!("red_dye"), 16),
-        ),
-        DyeRecipe(vec![item!(m!("red_tulip"))], item!(m!("red_dye"))),
-        DyeRecipe(vec![item!(m!("beetroot"))], item!(m!("red_dye"))),
-        DyeRecipe(vec![item!(m!("poppy"))], item!(m!("red_dye"))),
-        DyeRecipe(vec![item!(m!("rose_bush"), 2)], item!(m!("red_dye"), 2)),
-        DyeRecipe(vec![item!(m!("torchflower"))], item!(m!("orange_dye"))),
-        DyeRecipe(vec![item!(m!("orange_tulip"))], item!(m!("orange_dye"))),
-        DyeRecipe(
-            vec![item!(m!("red_dye")), item!(m!("yellow_dye"))],
-            item!(m!("orange_dye"), 2),
-        ),
-        DyeRecipe(vec![item!(m!("dandelion"))], item!(m!("yellow_dye"))),
-        DyeRecipe(vec![item!(m!("sunflower"), 2)], item!(m!("yellow_dye"))),
-        DyeRecipe(
-            vec![item!(m!("horn_coral_block"))],
-            item!(m!("yellow_dye"), 16),
-        ),
-        DyeRecipe(
-            vec![item!(m!("green_dye")), item!(m!("white_dye"))],
-            item!(m!("lime_dye"), 2),
-        ),
-        DyeRecipe(vec![item!(m!("kelp"))], item!(m!("green_dye"))),
-        DyeRecipe(vec![item!(m!("pitcher_plant"), 2)], item!(m!("cyan_dye"))),
-        DyeRecipe(
-            vec![item!(m!("blue_dye")), item!(m!("green_dye"))],
-            item!(m!("cyan_dye"), 2),
-        ),
-        DyeRecipe(vec![item!(m!("cornflower"))], item!(m!("blue_dye"))),
-        DyeRecipe(
-            vec![item!(m!("tube_coral_block"))],
-            item!(m!("blue_dye"), 16),
-        ),
-        DyeRecipe(vec![item!(m!("lapis_lazuli"))], item!(m!("blue_dye"))),
-        DyeRecipe(
-            vec![item!(m!("blue_dye")), item!(m!("red_dye"))],
-            item!(m!("purple_dye"), 2),
-        ),
-        DyeRecipe(
-            vec![
-                item!(m!("blue_dye")),
-                item!(m!("red_dye"), 2),
+    pack.add_recipes(
+        [
+            (vec![item!(m!("bone_meal"))], item!(m!("white_dye"))),
+            (
+                vec![item!(m!("lily_of_the_valley"))],
                 item!(m!("white_dye")),
-            ],
-            item!(m!("magenta_dye"), 4),
-        ),
-        DyeRecipe(vec![item!(m!("allium"))], item!(m!("magenta_dye"))),
-        DyeRecipe(
-            vec![
-                item!(m!("blue_dye")),
-                item!(m!("red_dye")),
-                item!(m!("pink_dye")),
-            ],
-            item!(m!("magenta_dye"), 3),
-        ),
-        DyeRecipe(vec![item!(m!("lilac"), 2)], item!(m!("magenta_dye"))),
-        DyeRecipe(
-            vec![item!(m!("purple_dye")), item!(m!("pink_dye"))],
-            item!(m!("magenta_dye"), 2),
-        ),
-        DyeRecipe(
-            vec![item!(m!("bubble_coral_block"))],
-            item!(m!("magenta_dye"), 16),
-        ),
-        DyeRecipe(
-            vec![item!(m!("red_dye")), item!(m!("white_dye"))],
-            item!(m!("pink_dye"), 2),
-        ),
-        DyeRecipe(
-            vec![item!(m!("brain_coral_block"))],
-            item!(m!("pink_dye"), 16),
-        ),
-        DyeRecipe(vec![item!(m!("pink_petals"))], item!(m!("pink_dye"))),
-        DyeRecipe(vec![item!(m!("pink_tulip"))], item!(m!("pink_dye"))),
-        DyeRecipe(vec![item!(m!("peony"))], item!(m!("pink_dye"), 2)),
-    ];
-
-    // Iterate through the dye recipes and add them to the datapack
-    for recipe in dye_recipes {
-        pack.add_recipe(Recipe::new(Dyer::Crafting, recipe.0, recipe.1));
-    }
+            ),
+            (vec![item!(m!("oxeye_daisy"))], item!(m!("light_gray_dye"))),
+            (vec![item!(m!("azure_bluet"))], item!(m!("light_gray_dye"))),
+            (vec![item!(m!("white_tulip"))], item!(m!("light_gray_dye"))),
+            (
+                vec![item!(m!("black_dye")), item!(m!("white_dye"), 2)],
+                item!(m!("light_gray_dye"), 3),
+            ),
+            (
+                vec![item!(m!("gray_dye")), item!(m!("white_dye"))],
+                item!(m!("light_gray_dye"), 2),
+            ),
+            (vec![item!(m!("blue_orchid"))], item!(m!("light_blue_dye"))),
+            (
+                vec![item!(m!("blue_dye")), item!(m!("white_dye"))],
+                item!(m!("light_blue_dye")),
+            ),
+            (
+                vec![item!(m!("white_dye")), item!(m!("black_dye"))],
+                item!(m!("gray_dye"), 2),
+            ),
+            (vec![item!(m!("ink_sac"))], item!(m!("black_dye"))),
+            (vec![item!(m!("wither_rose"))], item!(m!("black_dye"))),
+            (vec![item!(m!("cocoa_beans"))], item!(m!("brown_dye"))),
+            (
+                vec![item!(m!("fire_coral_block"))],
+                item!(m!("red_dye"), 16),
+            ),
+            (vec![item!(m!("red_tulip"))], item!(m!("red_dye"))),
+            (vec![item!(m!("beetroot"))], item!(m!("red_dye"))),
+            (vec![item!(m!("poppy"))], item!(m!("red_dye"))),
+            (vec![item!(m!("rose_bush"), 2)], item!(m!("red_dye"), 2)),
+            (vec![item!(m!("torchflower"))], item!(m!("orange_dye"))),
+            (vec![item!(m!("orange_tulip"))], item!(m!("orange_dye"))),
+            (
+                vec![item!(m!("red_dye")), item!(m!("yellow_dye"))],
+                item!(m!("orange_dye"), 2),
+            ),
+            (vec![item!(m!("dandelion"))], item!(m!("yellow_dye"))),
+            (vec![item!(m!("sunflower"), 2)], item!(m!("yellow_dye"))),
+            (
+                vec![item!(m!("horn_coral_block"))],
+                item!(m!("yellow_dye"), 16),
+            ),
+            (
+                vec![item!(m!("green_dye")), item!(m!("white_dye"))],
+                item!(m!("lime_dye"), 2),
+            ),
+            (vec![item!(m!("kelp"))], item!(m!("green_dye"))),
+            (vec![item!(m!("pitcher_plant"), 2)], item!(m!("cyan_dye"))),
+            (
+                vec![item!(m!("blue_dye")), item!(m!("green_dye"))],
+                item!(m!("cyan_dye"), 2),
+            ),
+            (vec![item!(m!("cornflower"))], item!(m!("blue_dye"))),
+            (
+                vec![item!(m!("tube_coral_block"))],
+                item!(m!("blue_dye"), 16),
+            ),
+            (vec![item!(m!("lapis_lazuli"))], item!(m!("blue_dye"))),
+            (
+                vec![item!(m!("blue_dye")), item!(m!("red_dye"))],
+                item!(m!("purple_dye"), 2),
+            ),
+            (
+                vec![
+                    item!(m!("blue_dye")),
+                    item!(m!("red_dye"), 2),
+                    item!(m!("white_dye")),
+                ],
+                item!(m!("magenta_dye"), 4),
+            ),
+            (vec![item!(m!("allium"))], item!(m!("magenta_dye"))),
+            (
+                vec![
+                    item!(m!("blue_dye")),
+                    item!(m!("red_dye")),
+                    item!(m!("pink_dye")),
+                ],
+                item!(m!("magenta_dye"), 3),
+            ),
+            (vec![item!(m!("lilac"), 2)], item!(m!("magenta_dye"))),
+            (
+                vec![item!(m!("purple_dye")), item!(m!("pink_dye"))],
+                item!(m!("magenta_dye"), 2),
+            ),
+            (
+                vec![item!(m!("bubble_coral_block"))],
+                item!(m!("magenta_dye"), 16),
+            ),
+            (
+                vec![item!(m!("red_dye")), item!(m!("white_dye"))],
+                item!(m!("pink_dye"), 2),
+            ),
+            (
+                vec![item!(m!("brain_coral_block"))],
+                item!(m!("pink_dye"), 16),
+            ),
+            (vec![item!(m!("pink_petals"))], item!(m!("pink_dye"))),
+            (vec![item!(m!("pink_tulip"))], item!(m!("pink_dye"))),
+            (vec![item!(m!("peony"))], item!(m!("pink_dye"), 2)),
+        ]
+        .map(|(input, output)| Recipe::new(Dyer::Crafting, input, output)),
+    );
 }
