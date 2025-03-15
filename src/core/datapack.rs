@@ -66,7 +66,8 @@ impl DataPack {
 
         println!("Writing {} Recipes", &self.recipes.len());
 
-        for (id, recipe) in &self.recipes {
+        for (index, (id, recipe)) in self.recipes.iter().enumerate() {
+            println!("Saving Recipe {index}: {id} for {}", recipe.result());
             let path = format!("data/{}/crafterrecipes/{}.json", self.name, id);
             zip.start_file(path, options)?;
             serde_json::to_writer(&mut zip, &recipe)?;

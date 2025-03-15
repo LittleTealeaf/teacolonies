@@ -5,7 +5,7 @@ pub trait Module {
 }
 
 impl DataPack {
-    fn apply<I: Module>(&mut self) {
+    pub fn apply<I: Module>(&mut self) {
         I::apply(self);
     }
 }

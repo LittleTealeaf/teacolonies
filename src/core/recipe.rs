@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use crate::item::Item;
+use crate::core::item::Item;
+use crate::core::serde_util::{exclude_if_false, exclude_if_one};
 use crate::m;
-use crate::serde_util::{exclude_if_false, exclude_if_one};
 
 #[derive(Clone, PartialEq, Eq, Serialize, Deserialize, Hash)]
 pub struct Recipe {
@@ -60,6 +60,10 @@ impl Recipe {
             show_tooltip: false,
             alternative_output: None,
         }
+    }
+
+    pub fn result(&self) -> &str {
+        &self.result
     }
 }
 

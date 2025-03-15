@@ -11,14 +11,8 @@ pub struct Item {
 }
 
 impl Item {
-    pub fn new<I>(name: I, count: usize) -> Self
-    where
-        String: From<I>,
-    {
-        Self {
-            name: name.into(),
-            count,
-        }
+    pub fn new(name: String, count: usize) -> Self {
+        Self { name, count }
     }
 
     pub fn name(&self) -> &str {
