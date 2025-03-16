@@ -1,6 +1,6 @@
 use crate::{
     core::{
-        crafters::{Alchemist, Forester, Mechanic, Sawmill},
+        crafters::{Alchemist, Forester, Mechanic, Planter, Sawmill},
         datapack::DataPack,
         module::Module,
         recipe::Recipe,
@@ -111,6 +111,12 @@ impl Tree {
 
 impl Module for CarpentryModule {
     fn apply(pack: &mut DataPack) {
+        pack.add_recipe(Recipe::new(
+            Planter::Crafting,
+            item!(m!("bamboo"), 9),
+            item!(m!("bamboo_block")),
+        ));
+
         Tree::trees().for_each(|t| {
             let mut recipes = Vec::new();
 
@@ -119,21 +125,17 @@ impl Module for CarpentryModule {
                 recipes.extend([
                     Recipe::new(
                         Forester::Custom,
-                        [item!(mc!("compost"))],
+                        item!(mc!("compost")),
                         item!(sapling.clone(), 4),
                     ),
-                    Recipe::new(
-                        Forester::Custom,
-                        [item!(sapling.clone())],
-                        item!(t.log(), 4),
-                    )
-                    .with_min_building_level(5),
+                    Recipe::new(Forester::Custom, item!(sapling.clone()), item!(t.log(), 4))
+                        .with_min_building_level(5),
                 ]);
 
                 if let Some(leaves) = &t.leaves {
                     recipes.push(Recipe::new(
                         Forester::Custom,
-                        [item!(sapling.clone())],
+                        item!(sapling.clone()),
                         item!(leaves.clone(), 2),
                     ));
                 }
@@ -143,7 +145,7 @@ impl Module for CarpentryModule {
                 recipes.push(
                     Recipe::new(
                         Alchemist::Crafting,
-                        [item!(leaves.clone())],
+                        item!(leaves.clone()),
                         item!(mc!("mistletoe"), 3),
                     )
                     .with_tool(m!("shears")),
@@ -153,7 +155,7 @@ impl Module for CarpentryModule {
             if let Some(wood) = t.wood() {
                 recipes.push(Recipe::new(
                     Sawmill::Crafting,
-                    [item!(t.log(), 4)],
+                    item!(t.log(), 4),
                     item!(wood, 3),
                 ));
             }
@@ -161,7 +163,7 @@ impl Module for CarpentryModule {
             if let Some(stripped_wood) = t.stripped_wood() {
                 recipes.push(Recipe::new(
                     Sawmill::Crafting,
-                    [item!(t.stripped_log(), 4)],
+                    item!(t.stripped_log(), 4),
                     item!(stripped_wood, 3),
                 ));
             }
@@ -170,7 +172,7 @@ impl Module for CarpentryModule {
             recipes.extend([
                 Recipe::new(
                     Sawmill::Crafting,
-                    [item!(t.log.clone())],
+                    item!(t.log.clone()),
                     item!(t.planks(), if t.tree == "bamboo" { 2 } else { 4 }),
                 ),
                 Recipe::new(
@@ -247,12 +249,12 @@ impl Module for CarpentryModule {
             recipes.extend([
                 Recipe::new(
                     Mechanic::Crafting,
-                    [item!(t.planks())],
+                    item!(t.planks()),
                     item!(t.var("button")),
                 ),
                 Recipe::new(
                     Mechanic::Crafting,
-                    [item!(t.planks(), 2)],
+                    item!(t.planks(), 2),
                     item!(t.var("pressure_plate")),
                 ),
             ]);
@@ -277,7 +279,7 @@ impl Module for CarpentryModule {
                 .flat_map(|(p, values)| {
                     let planks = t.planks();
                     values.into_iter().map(move |item| {
-                        Recipe::new(Sawmill::Crafting, [item!(planks.clone(), p)], item)
+                        Recipe::new(Sawmill::Crafting, item!(planks.clone(), p), item)
                     })
                 }),
             );

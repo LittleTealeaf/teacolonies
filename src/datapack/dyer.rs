@@ -76,7 +76,7 @@ fn add_recipes(dp: &mut DataPack, color: &str) {
 
     dp.add_recipe(Recipe::new(
         Fletcher::Crafting,
-        [item!(m!(format!("{color}_wool")))],
+        item!(m!(format!("{color}_wool"))),
         item!(mc!("colony_banner")),
     ));
 

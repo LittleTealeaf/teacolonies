@@ -1,3 +1,5 @@
+use std::iter::{once, Once};
+
 use serde::{Deserialize, Serialize};
 
 use crate::core::serde_util::exclude_if_one;
@@ -21,6 +23,14 @@ impl Item {
 
     pub fn count(&self) -> usize {
         self.count
+    }
+}
+
+impl IntoIterator for Item {
+    type Item = Self;
+    type IntoIter = Once<Self>;
+    fn into_iter(self) -> Self::IntoIter {
+        once(self)
     }
 }
 
