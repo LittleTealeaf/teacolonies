@@ -68,14 +68,13 @@ impl Recipe {
 
     pub fn add_min_building_level(self, min_building_level: usize) -> Self {
         let current = self.min_building_level.unwrap_or(1);
-        let max = min_building_level.max(current);
-        if max == 1 {
-            self
-        } else {
+        if min_building_level > current {
             Self {
-                min_building_level: Some(max),
+                min_building_level: Some(min_building_level),
                 ..self
             }
+        } else {
+            self
         }
     }
 }
