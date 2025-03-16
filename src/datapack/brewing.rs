@@ -32,7 +32,7 @@ impl DataPack {
                 [
                     item!(ingredient),
                     item!(m!("blaze_powder")),
-                    item!(nbt!(from_item, "Poition" = from_potion)),
+                    item!(nbt!(from_item, "Potion" = from_potion)),
                 ],
                 item!(nbt!(to_item, "Potion" = to_potion)),
             )
