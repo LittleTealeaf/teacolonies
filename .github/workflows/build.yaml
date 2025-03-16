@@ -1,6 +1,7 @@
 name: Cargo Release and Artifact
 
 on:
+  pull_request:
   push:
     branches:
       - main # Or whatever branch you want to trigger on
