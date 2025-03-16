@@ -1,6 +1,6 @@
 use crate::{
     core::{
-        crafters::{Forester, Mechanic, Sawmill},
+        crafters::{Alchemist, Forester, Mechanic, Sawmill},
         datapack::DataPack,
         module::Module,
         recipe::Recipe,
@@ -114,12 +114,40 @@ impl Module for CarpentryModule {
         Tree::trees().for_each(|t| {
             let mut recipes = Vec::new();
 
+            // Sapling Recipe
             if let Some(sapling) = &t.sapling {
-                recipes.push(Recipe::new(
-                    Forester::Custom,
-                    [item!(mc!("compost"))],
-                    item!(sapling.clone(), 4),
-                ));
+                recipes.extend([
+                    Recipe::new(
+                        Forester::Custom,
+                        [item!(mc!("compost"))],
+                        item!(sapling.clone(), 4),
+                    ),
+                    Recipe::new(
+                        Forester::Custom,
+                        [item!(sapling.clone())],
+                        item!(t.log(), 4),
+                    )
+                    .with_min_building_level(5),
+                ]);
+
+                if let Some(leaves) = &t.leaves {
+                    recipes.push(Recipe::new(
+                        Forester::Custom,
+                        [item!(sapling.clone())],
+                        item!(leaves.clone(), 2),
+                    ));
+                }
+            }
+
+            if let Some(leaves) = &t.leaves {
+                recipes.push(
+                    Recipe::new(
+                        Alchemist::Crafting,
+                        [item!(leaves.clone())],
+                        item!(mc!("mistletoe"), 3),
+                    )
+                    .with_tool(m!("shears")),
+                );
             }
 
             if let Some(wood) = t.wood() {
