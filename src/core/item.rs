@@ -26,6 +26,7 @@ impl Item {
     }
 }
 
+// Allows for Item to be used in IntoIterator<Item = Item> fields
 impl IntoIterator for Item {
     type Item = Self;
     type IntoIter = Once<Self>;
