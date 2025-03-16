@@ -2,7 +2,7 @@ use std::iter::once;
 
 use crate::{
     core::{
-        crafters::{Forester, Sawmill},
+        crafters::{Forester, Mechanic, Sawmill},
         datapack::DataPack,
         module::Module,
         recipe::Recipe,
@@ -124,6 +124,7 @@ impl Module for CarpentryModule {
                 ));
             }
 
+            // Sawmill Recipes
             recipes.extend([
                 Recipe::new(
                     Sawmill::Crafting,
@@ -140,8 +141,81 @@ impl Module for CarpentryModule {
                     [item!(m!("chain"), 2), item!(t.stripped_log(), 6)],
                     item!(t.var("hanging_sign"), 3),
                 ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.planks(), 4), item!(m!("stick"), 2)],
+                    item!(t.var("fence"), 3),
+                ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.planks(), 2), item!(m!("stick"), 4)],
+                    item!(t.var("fence_gate"), 3),
+                ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.planks(), 6), item!(t.slab(), 2)],
+                    item!(m!("barrel")),
+                ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.planks(), 6), item!(m!("honeycomb"), 3)],
+                    item!(m!("beehive")),
+                ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.planks(), 2), item!(m!("stone_slab"))],
+                    item!(m!("grindstone")),
+                ),
             ]);
 
+            // Minecolonies Crafting
+            recipes.extend([
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.planks(), 3), item!(m!("stick"), 6)],
+                    item!(mc!("blockbarreldeco_onside")),
+                ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.planks(), 3), item!(m!("stick"), 6)],
+                    item!(mc!("blockbarreldeco_standing")),
+                ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.planks(), 6), item!(m!("iron_nugget"), 2)],
+                    item!(mc!("blockminecoloniesrack")),
+                ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.planks(), 6), item!(m!("chest"), 2)],
+                    item!(mc!("bookstash")),
+                ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [
+                        item!(t.planks(), 6),
+                        item!(m!("iron_ingot")),
+                        item!(m!("dirt")),
+                    ],
+                    item!(mc!("barrel_block")),
+                ),
+            ]);
+
+            // Mechanic Crafting
+            recipes.extend([
+                Recipe::new(
+                    Mechanic::Crafting,
+                    [item!(t.planks())],
+                    item!(t.var("button")),
+                ),
+                Recipe::new(
+                    Mechanic::Crafting,
+                    [item!(t.planks(), 2)],
+                    item!(t.var("pressure_plate")),
+                ),
+            ]);
+
+            // Planks-Only Recipes
             recipes.extend(
                 [
                     (2, vec![item!(m!("stick"), 4)]),
@@ -154,6 +228,7 @@ impl Module for CarpentryModule {
                         ],
                     ),
                     (4, vec![item!(m!("crafting_table"))]),
+                    (6, vec![item!(t.var("trapdoor"), 2)]),
                     (8, vec![item!(m!("chest"))]),
                 ]
                 .into_iter()
