@@ -1,5 +1,3 @@
-use std::iter::once;
-
 use crate::{
     core::{
         crafters::{Forester, Mechanic, Sawmill},
@@ -121,6 +119,22 @@ impl Module for CarpentryModule {
                     Forester::Custom,
                     [item!(mc!("compost"))],
                     item!(sapling.clone(), 4),
+                ));
+            }
+
+            if let Some(wood) = t.wood() {
+                recipes.push(Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.log(), 4)],
+                    item!(wood, 3),
+                ));
+            }
+
+            if let Some(stripped_wood) = t.stripped_wood() {
+                recipes.push(Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(t.stripped_log(), 4)],
+                    item!(stripped_wood, 3),
                 ));
             }
 
