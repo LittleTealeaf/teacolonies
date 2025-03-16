@@ -65,6 +65,19 @@ impl Recipe {
     pub fn result(&self) -> &str {
         &self.result
     }
+
+    pub fn add_min_building_level(self, min_building_level: usize) -> Self {
+        let current = self.min_building_level.unwrap_or(1);
+        let max = min_building_level.max(current);
+        if max == 1 {
+            self
+        } else {
+            Self {
+                min_building_level: Some(max),
+                ..self
+            }
+        }
+    }
 }
 
 macro_rules! include_with {

@@ -1,15 +1,22 @@
 use std::iter::once;
 
 use crate::{
-    core::{crafters::Sawmill, datapack::DataPack, module::Module, recipe::Recipe},
-    item, m,
+    core::{
+        crafters::{Forester, Sawmill},
+        datapack::DataPack,
+        module::Module,
+        recipe::Recipe,
+    },
+    item, m, mc,
 };
 
 pub struct CarpentryModule;
 
 #[derive(Debug)]
 struct Tree {
+    /// The prefix of the name, ex: "minecraft:". : is included
     root: String,
+    tree: String,
     log: String,
     wood: Option<String>,
     stripped_log: String,
@@ -20,15 +27,16 @@ struct Tree {
 }
 
 impl Tree {
-    fn basic(root: &str) -> Self {
+    fn initialize_basic(tree: &str) -> Self {
         Self {
-            root: root.to_string(),
-            log: m!(format!("{root}_log")),
-            stripped_log: m!(format!("stripped_{root}_log")),
-            sapling: Some(m!(format!("{root}_sapling"))),
-            leaves: Some(m!(format!("{root}_leaves"))),
-            wood: Some(m!(format!("{root}_wood"))),
-            stripped_wood: Some(m!(format!("stripped_{root}_wood"))),
+            root: m!(""),
+            tree: tree.to_owned(),
+            log: m!(format!("{tree}_log")),
+            stripped_log: m!(format!("stripped_{tree}_log")),
+            sapling: Some(m!(format!("{tree}_sapling"))),
+            leaves: Some(m!(format!("{tree}_leaves"))),
+            wood: Some(m!(format!("{tree}_wood"))),
+            stripped_wood: Some(m!(format!("stripped_{tree}_wood"))),
             level: 1,
         }
     }
@@ -37,65 +45,131 @@ impl Tree {
         [
             "cherry", "acacia", "birch", "cherry", "dark_oak", "jungle", "oak", "spruce",
         ]
-        .map(Self::basic)
+        .map(Self::initialize_basic)
         .into_iter()
-        .chain(["crimson", "warped"].map(|root| Self {
-            root: root.to_owned(),
-            log: m!(format!("{root}_stem")),
-            stripped_log: m!(format!("stripped_{root}_stem")),
-            wood: Some(m!(format!("{root}_hyphae"))),
-            stripped_wood: Some(m!(format!("stripped_{root}_hyphae"))),
-            leaves: Some(if root == "crimson" {
+        .chain(["crimson", "warped"].map(|tree| Self {
+            root: m!(""),
+            tree: tree.to_owned(),
+            log: m!(format!("{tree}_stem")),
+            stripped_log: m!(format!("stripped_{tree}_stem")),
+            wood: Some(m!(format!("{tree}_hyphae"))),
+            stripped_wood: Some(m!(format!("stripped_{tree}_hyphae"))),
+            leaves: Some(if tree == "crimson" {
                 m!("nether_wart_block")
             } else {
                 m!("warped_wart_block")
             }),
-            sapling: Some(m!(format!("{root}_fungus"))),
+            sapling: Some(m!(format!("{tree}_fungus"))),
             level: 3,
         }))
-        .chain(once(Self {
-            root: "bamboo".to_owned(),
-            log: m!("bamboo_block"),
-            stripped_log: m!("stripped_bamboo_block"),
-            wood: None,
-            stripped_wood: None,
-            leaves: None,
-            sapling: None,
-            level: 2,
-        }))
+        .chain([
+            Self {
+                root: m!(""),
+                tree: "bamboo".to_owned(),
+                log: m!("bamboo_block"),
+                stripped_log: m!("stripped_bamboo_block"),
+                wood: None,
+                stripped_wood: None,
+                leaves: None,
+                sapling: None,
+                level: 2,
+            },
+            Self {
+                sapling: Some(m!("mangrove_propagule")),
+                level: 2,
+                ..Self::initialize_basic("mangrove")
+            },
+        ])
+    }
+
+    fn var(&self, var: &str) -> String {
+        format!("{}{}_{}", self.root, self.tree, var)
+    }
+
+    fn planks(&self) -> String {
+        self.var("planks")
+    }
+
+    fn slab(&self) -> String {
+        self.var("slab")
+    }
+
+    fn log(&self) -> String {
+        self.log.clone()
+    }
+
+    fn stripped_log(&self) -> String {
+        self.stripped_log.clone()
+    }
+
+    fn wood(&self) -> Option<String> {
+        self.wood.clone()
+    }
+
+    fn stripped_wood(&self) -> Option<String> {
+        self.stripped_wood.clone()
     }
 }
 
 impl Module for CarpentryModule {
     fn apply(pack: &mut DataPack) {
-        Tree::trees().for_each(|tree| {
-            let Tree {
-                root,
-                log,
-                stripped_log,
-                wood,
-                stripped_wood,
-                sapling,
-                leaves,
-                level,
-            } = tree;
-            let planks = m!(format!("{root}_planks"));
-            let slab = m!(format!("{root}_slab"));
+        Tree::trees().for_each(|t| {
+            let mut recipes = Vec::new();
 
-            pack.add_recipes([
+            if let Some(sapling) = &t.sapling {
+                recipes.push(Recipe::new(
+                    Forester::Custom,
+                    [item!(mc!("compost"))],
+                    item!(sapling.clone(), 4),
+                ));
+            }
+
+            recipes.extend([
                 Recipe::new(
                     Sawmill::Crafting,
-                    [item!(log)],
-                    item!(planks.clone(), if root == "bamboo" { 2 } else { 4 }),
+                    [item!(t.log.clone())],
+                    item!(t.planks(), if t.tree == "bamboo" { 2 } else { 4 }),
                 ),
                 Recipe::new(
                     Sawmill::Crafting,
-                    [item!(planks.clone(), 3)],
-                    item!(slab.clone(), 6),
+                    [item!(t.planks(), 6), item!(m!("stick"))],
+                    item!(t.var("sign"), 3),
+                ),
+                Recipe::new(
+                    Sawmill::Crafting,
+                    [item!(m!("chain"), 2), item!(t.stripped_log(), 6)],
+                    item!(t.var("hanging_sign"), 3),
                 ),
             ]);
-        });
 
-        // println!("{:?}", Tree::trees().collect::<Vec<_>>())
+            recipes.extend(
+                [
+                    (2, vec![item!(m!("stick"), 4)]),
+                    (
+                        3,
+                        vec![
+                            item!(t.slab(), 6),
+                            item!(t.var("stairs"), 4),
+                            item!(t.var("door"), 3),
+                        ],
+                    ),
+                    (4, vec![item!(m!("crafting_table"))]),
+                    (8, vec![item!(m!("chest"))]),
+                ]
+                .into_iter()
+                .flat_map(|(p, values)| {
+                    let planks = t.planks();
+                    values.into_iter().map(move |item| {
+                        Recipe::new(Sawmill::Crafting, [item!(planks.clone(), p)], item)
+                    })
+                }),
+            );
+
+            pack.add_recipes(
+                recipes
+                    .into_iter()
+                    .map(|recipe| recipe.add_min_building_level(t.level)),
+            );
+        });
     }
 }
