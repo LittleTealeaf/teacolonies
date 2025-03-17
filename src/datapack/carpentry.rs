@@ -152,20 +152,24 @@ impl Module for CarpentryModule {
                 );
             }
 
-            if let Some(wood) = t.wood() {
-                recipes.push(Recipe::new(
-                    Sawmill::Crafting,
-                    item!(t.log(), 4),
-                    item!(wood, 3),
-                ));
-            }
+            // Wood Conversion
+            // Note that minecolonies already has a wood to strippedwood recipe
+            {
+                if let Some(wood) = t.wood() {
+                    recipes.push(Recipe::new(
+                        Sawmill::Crafting,
+                        item!(t.log(), 4),
+                        item!(wood, 3),
+                    ));
+                }
 
-            if let Some(stripped_wood) = t.stripped_wood() {
-                recipes.push(Recipe::new(
-                    Sawmill::Crafting,
-                    item!(t.stripped_log(), 4),
-                    item!(stripped_wood, 3),
-                ));
+                if let Some(stripped_wood) = t.stripped_wood() {
+                    recipes.push(Recipe::new(
+                        Sawmill::Crafting,
+                        item!(t.stripped_log(), 4),
+                        item!(stripped_wood, 3),
+                    ));
+                }
             }
 
             // Sawmill Recipes
@@ -210,6 +214,14 @@ impl Module for CarpentryModule {
                     [item!(t.planks(), 2), item!(m!("stone_slab"))],
                     item!(m!("grindstone")),
                 ),
+            ]);
+
+            // Tools
+            recipes.extend([Recipe::new(
+                Sawmill::Crafting,
+                [item!(m!("stick"), 2), item!(m!(t.planks()), 1)],
+                item!(m!("wooden_shovel")),
+            ),
             ]);
 
             // Minecolonies Crafting

@@ -147,23 +147,23 @@ impl Module for BrewingModule {
             item!(m!("glistering_melon_slice")),
         ));
 
-        let fse = "fermented_spider_eye";
+        const FSE: &str = "fermented_spider_eye";
         pack.brew_mc("water", "nether_wart", "awkward", false, false, 1);
         pack.brew_mc("awkward", "sugar", "swiftness", true, true, 1);
         pack.brew_mc("awkward", "rabbit_foot", "leaping", true, true, 1);
-        pack.brew_mc("swiftness", fse, "slowness", true, true, 2);
+        pack.brew_mc("swiftness", FSE, "slowness", true, true, 2);
         pack.brew_mc(
             "long_swiftness",
-            fse,
+            FSE,
             "long_slowness",
             false,
             false,
             POTION_LONG_MIN_LEVEL,
         );
-        pack.brew_mc("leaping", fse, "slowness", false, false, 2);
+        pack.brew_mc("leaping", FSE, "slowness", false, false, 2);
         pack.brew_mc(
             "long_leaping",
-            fse,
+            FSE,
             "long_slowness",
             false,
             false,
@@ -178,20 +178,20 @@ impl Module for BrewingModule {
             false,
             1,
         );
-        pack.brew_mc("healing", fse, "harming", true, false, 2);
+        pack.brew_mc("healing", FSE, "harming", true, false, 2);
         pack.brew_mc(
             "strong_healing",
-            fse,
+            FSE,
             "strong_harming",
             false,
             false,
             POTION_STRONG_MIN_LEVEL,
         );
         pack.brew_mc("awkward", "spider_eye", "poison", true, true, 1);
-        pack.brew_mc("poison", fse, "harming", false, false, 2);
+        pack.brew_mc("poison", FSE, "harming", false, false, 2);
         pack.brew_mc(
             "strong_poison",
-            fse,
+            FSE,
             "strong_harming",
             false,
             false,
@@ -201,10 +201,10 @@ impl Module for BrewingModule {
         pack.brew_mc("awkward", "magma_cream", "fire_resistance", false, true, 1);
         pack.brew_mc("awkward", "pufferfish", "water_breathing", false, true, 1);
         pack.brew_mc("awkward", "golden_carrot", "night_vision", false, true, 1);
-        pack.brew_mc("night_vision", fse, "invisibility", false, true, 2);
+        pack.brew_mc("night_vision", FSE, "invisibility", false, true, 2);
         pack.brew_mc(
             "long_night_vision",
-            fse,
+            FSE,
             "long_invisibility",
             false,
             false,
@@ -219,6 +219,6 @@ impl Module for BrewingModule {
             true,
             5,
         );
-        pack.brew_mc("water", fse, "weakness", false, true, 1);
+        pack.brew_mc("water", FSE, "weakness", false, true, 1);
     }
 }
