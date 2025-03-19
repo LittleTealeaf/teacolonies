@@ -1,0 +1,30 @@
+name: Cargo Release and Artifact
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main # Or whatever branch you want to trigger on
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Run Cargo --release
+        run: cargo run --release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: teacolonies.zip
+          path: teacolonies.zip

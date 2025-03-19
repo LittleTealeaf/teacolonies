@@ -1,5 +1,4 @@
 use crate::core::crafters::Fletcher;
-use crate::core::item::Item;
 use crate::core::{crafters::Dyer, datapack::DataPack, module::Module, recipe::Recipe};
 use crate::{dom, item, m, mc};
 
@@ -76,7 +75,7 @@ fn add_recipes(dp: &mut DataPack, color: &str) {
 
     dp.add_recipe(Recipe::new(
         Fletcher::Crafting,
-        [item!(m!(format!("{color}_wool")))],
+        item!(m!(format!("{color}_wool"))),
         item!(mc!("colony_banner")),
     ));
 
