@@ -2,3 +2,4 @@ install.py
 *.zip
 __pycache__
 target/
+teacolonies/
