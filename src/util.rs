@@ -20,6 +20,11 @@ pub fn unzip(zip_path: &str, dest_dir: &str) -> io::Result<()> {
         let mut file = archive.by_index(i)?;
         let outpath = PathBuf::from(dest_dir).join(file.name());
 
+        if file.unix_mode().map(|m| m & 0o120000 == 0o120000).unwrap_or(false) {  // 0o120000 is the symlink mode
+            println!("Skipping symbolic link: {}", file.name());
+            continue;
+        }
+
         if file.name().ends_with('/') {
             fs::create_dir_all(&outpath)?;
         } else {
