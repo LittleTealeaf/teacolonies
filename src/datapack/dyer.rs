@@ -1,5 +1,4 @@
 use crate::core::crafters::Fletcher;
-use crate::core::item::Item;
 use crate::core::{crafters::Dyer, datapack::DataPack, module::Module, recipe::Recipe};
 use crate::{dom, item, m, mc};
 

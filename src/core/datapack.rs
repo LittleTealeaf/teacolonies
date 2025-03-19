@@ -36,9 +36,11 @@ impl DataPack {
     }
 
     pub fn add_recipes(&mut self, recipes: impl IntoIterator<Item = Recipe>) {
-        recipes.into_iter().for_each(|recipe| {
-            self.add_recipe(recipe);
-        });
+        self.recipes.extend(
+            recipes
+                .into_iter()
+                .map(|recipe| (generate_uuid_from_hashable(&recipe).to_string(), recipe)),
+        );
     }
 
     pub fn add_recipe(&mut self, recipe: Recipe) -> String {
