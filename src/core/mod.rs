@@ -4,5 +4,4 @@ pub mod item;
 pub mod recipe;
 pub mod serde_util;
 pub mod module;
-pub mod loot_table;
 pub mod util;

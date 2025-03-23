@@ -1,7 +1,9 @@
 use std::path::Path;
 
 use teacolonies::core::datapack::DataPack;
-use teacolonies::datapack::{BrewingModule, CarpentryModule, DyerModule, MiscModule, NetherModule};
+use teacolonies::datapack::{
+    BrewingModule, CarpentryModule, DyerModule, MiscModule, NetherModule, StoneModule,
+};
 use teacolonies::util::unzip;
 
 fn main() -> std::io::Result<()> {
@@ -12,6 +14,7 @@ fn main() -> std::io::Result<()> {
     dp.apply::<CarpentryModule>();
     dp.apply::<MiscModule>();
     dp.apply::<NetherModule>();
+    dp.apply::<StoneModule>();
 
     dp.save_to_zip(Path::new("teacolonies.zip"))?;
 

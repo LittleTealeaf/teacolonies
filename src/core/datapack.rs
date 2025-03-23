@@ -1,6 +1,6 @@
 use std::{
     collections::HashMap,
-    fs::{self, File},
+    fs::File,
     hash::{DefaultHasher, Hash, Hasher},
     path::Path,
 };
