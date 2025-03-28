@@ -32,9 +32,9 @@ impl DataPack {
                 [
                     item!(ingredient),
                     item!(m!("blaze_powder")),
-                    item!(nbt!(from_item, "Potion" = from_potion)),
+                    item!(nbt!(from_item, "Potion" = from_potion), 3),
                 ],
-                item!(nbt!(to_item, "Potion" = to_potion)),
+                item!(nbt!(to_item, "Potion" = to_potion), 3),
             )
             .with_min_building_level(min_level),
         )

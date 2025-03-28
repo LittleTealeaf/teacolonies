@@ -4,7 +4,9 @@ use teacolonies::core::datapack::DataPack;
 use teacolonies::datapack::{
     BrewingModule, CarpentryModule, DyerModule, MiscModule, NetherModule, StoneModule,
 };
-use teacolonies::util::unzip;
+
+#[cfg(debug_assertions)]
+use teacolonies::util::{delete_directory_recursive, unzip};
 
 fn main() -> std::io::Result<()> {
     let mut dp = DataPack::new("teacolonies");
@@ -20,6 +22,7 @@ fn main() -> std::io::Result<()> {
 
     #[cfg(debug_assertions)]
     {
+        delete_directory_recursive(Path::new("teacolonies"))?;
         unzip("teacolonies.zip", "teacolonies")?;
     }
 
